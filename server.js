@@ -28,7 +28,7 @@ app.post('/login', async (req, res) => {
 	// simulating a database query
 	const user = USERS.find(u => u.email === req.body.email);
 
-	if (user !== null) {
+	if (user !== undefined) {
 		try {
 			const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
 				expiresIn: "1h",
@@ -45,7 +45,7 @@ app.post('/login', async (req, res) => {
 
 app.get("/verify", (req, res) => {
 	const token = req.query.token;
-	if (token === null)
+	if (token === undefined)
 		return res.sendStatus(401);
 	
 	try {
